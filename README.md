@@ -1,2 +1,3 @@
-# shhn
-# shhn
+# hn in the terminal
+
+learning haskell
