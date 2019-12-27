@@ -7,8 +7,8 @@ import qualified Data.ByteString.Char8   as B8
 import           Control.Lens            ( preview )
 import           Data.Aeson.Lens         ( key, _String )
 import           Data.Text               ( Text )
+import qualified Data.Text.IO            as TIO
 import           Data.List
-
 
 fetchIds :: IO B8.ByteString
 fetchIds = do
@@ -45,5 +45,11 @@ main :: IO ()
 main = do
   ids <- fetchIds
   story <- fetchStory $ byteStringToString $ getNthId (parseIds ids) 0
-  print (getStoryTitle story)
-  print (getStoryUrl story)
+
+  case getStoryTitle story of
+    Nothing   -> TIO.putStrLn "Nothing"
+    Just title -> TIO.putStrLn $ title
+
+  case getStoryUrl story of
+    Nothing   -> TIO.putStrLn "Nothing"
+    Just url -> TIO.putStrLn $ url
