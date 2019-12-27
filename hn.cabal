@@ -4,12 +4,12 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1e87bdc25fe74fc7e4798f0b07d01343e6e7857b1b64e56f60500d613fc58d87
+-- hash: 9fbe8008b6af02f6cbccb327d6c94c703a35f38f4b64d6495b5d302da6f22943
 
-name:           shhn
+name:           hn
 version:        0.1.0.0
 category:       Web
-homepage:       https://github.com/ollelinderos/shhn#readme
+homepage:       https://github.com/ollelinderos/hn#readme
 author:         Olle Linderos
 maintainer:     olle@linderos.nu
 copyright:      2019 Olle Linderos
@@ -21,7 +21,7 @@ extra-source-files:
 executable shhn
   main-is: Main.hs
   other-modules:
-      Paths_shhn
+      Paths_hn
   hs-source-dirs:
       src
   build-depends:

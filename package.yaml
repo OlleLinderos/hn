@@ -1,8 +1,8 @@
-name:                shhn
+name:                hn
 version:             0.1.0.0
 #synopsis:
 #description:
-homepage:            https://github.com/ollelinderos/shhn#readme
+homepage:            https://github.com/ollelinderos/hn#readme
 license:             BSD3
 author:              Olle Linderos
 maintainer:          olle@linderos.nu
