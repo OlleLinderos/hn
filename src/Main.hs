@@ -19,8 +19,8 @@ fetchIds = do
 parseIds :: B8.ByteString -> [B8.ByteString]
 parseIds x = B8.split ',' $ B8.tail $ B8.init x
 
-getFirstId :: [B8.ByteString] -> B8.ByteString
-getFirstId x = x!!0
+getNthId :: [B8.ByteString] -> Int -> B8.ByteString
+getNthId x n = x!!n
 
 byteStringToString :: B8.ByteString -> String
 byteStringToString x = filter (/='"') $ show x
@@ -29,13 +29,13 @@ prepareUrl :: String -> Request
 prepareUrl x =
   parseRequest_ $ intercalate "" ["https://hacker-news.firebaseio.com/v0/item/", x, ".json"] 
 
-fetchFirstStory :: String -> IO B8.ByteString
-fetchFirstStory id = do
+fetchStory :: String -> IO B8.ByteString
+fetchStory id = do
   res <- httpBS $ prepareUrl id
   return (getResponseBody res)
 
 main :: IO ()
 main = do
-  json <- fetchIds
-  story <- fetchFirstStory $ byteStringToString $ getFirstId $ parseIds json
+  ids <- fetchIds
+  story <- fetchStory $ byteStringToString $ getNthId (parseIds ids) 0
   print story
