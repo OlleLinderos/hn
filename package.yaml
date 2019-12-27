@@ -1,0 +1,26 @@
+name:                shhn
+version:             0.1.0.0
+#synopsis:
+#description:
+homepage:            https://github.com/ollelinderos/shhn#readme
+license:             BSD3
+author:              Olle Linderos
+maintainer:          olle@linderos.nu
+copyright:           2019 Olle Linderos
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+  - split
+  - http-conduit
+  - bytestring
+  - text
+  - lens
+  - lens-aeson
+
+executables:
+  shhn:
+    source-dirs:      src
+    main:             Main.hs

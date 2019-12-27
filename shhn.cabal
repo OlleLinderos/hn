@@ -1,0 +1,35 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 1e87bdc25fe74fc7e4798f0b07d01343e6e7857b1b64e56f60500d613fc58d87
+
+name:           shhn
+version:        0.1.0.0
+category:       Web
+homepage:       https://github.com/ollelinderos/shhn#readme
+author:         Olle Linderos
+maintainer:     olle@linderos.nu
+copyright:      2019 Olle Linderos
+license:        BSD3
+build-type:     Simple
+extra-source-files:
+    README.md
+
+executable shhn
+  main-is: Main.hs
+  other-modules:
+      Paths_shhn
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , http-conduit
+    , lens
+    , lens-aeson
+    , split
+    , text
+  default-language: Haskell2010
