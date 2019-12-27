@@ -4,11 +4,10 @@ module Main where
 
 import           Network.HTTP.Simple     (httpBS, getResponseBody, Request, parseRequest_)
 import qualified Data.ByteString.Char8   as B8
+import           Control.Lens            ( preview )
+import           Data.Aeson.Lens         ( key, _String )
+import           Data.Text               ( Text )
 import           Data.List
-
---import           Control.Lens                   ( preview )
---import           Data.Aeson.Lens                ( key, _String )
---import           Data.Text                      ( Text )
 
 
 fetchIds :: IO B8.ByteString
@@ -34,8 +33,17 @@ fetchStory id = do
   res <- httpBS $ prepareUrl id
   return (getResponseBody res)
 
+getStoryTitle :: B8.ByteString -> Maybe Text
+getStoryTitle = preview (key "title" . _String)
+
+getStoryUrl :: B8.ByteString -> Maybe Text
+getStoryUrl = preview (key "url" . _String)
+
+joinStory t u = intercalate " - " [t, u]
+
 main :: IO ()
 main = do
   ids <- fetchIds
   story <- fetchStory $ byteStringToString $ getNthId (parseIds ids) 0
-  print story
+  print (getStoryTitle story)
+  print (getStoryUrl story)
