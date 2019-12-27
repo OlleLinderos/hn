@@ -51,3 +51,5 @@ main = do
     Just title -> TIO.putStrLn $ title
 
   case getStoryUrl story of
+    Nothing    -> TIO.putStrLn "Nothing"
+    Just url   -> TIO.putStrLn $ url
