@@ -1,3 +1,3 @@
-# hn in the terminal
+# HackerNews in the terminal
 
-learning haskell
+Learning haskell, eventually.
