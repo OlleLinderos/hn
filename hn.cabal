@@ -18,7 +18,7 @@ build-type:     Simple
 extra-source-files:
     README.md
 
-executable shhn
+executable hn
   main-is: Main.hs
   other-modules:
       Paths_hn
