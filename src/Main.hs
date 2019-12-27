@@ -47,9 +47,9 @@ main = do
   story <- fetchStory $ byteStringToString $ getNthId (parseIds ids) 0
 
   case getStoryTitle story of
-    Nothing   -> TIO.putStrLn "Nothing"
+    Nothing    -> TIO.putStrLn "Nothing"
     Just title -> TIO.putStrLn $ title
 
   case getStoryUrl story of
     Nothing   -> TIO.putStrLn "Nothing"
-    Just url -> TIO.putStrLn $ url
+    Just url  -> TIO.putStrLn $ url
