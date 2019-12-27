@@ -43,7 +43,7 @@ joinStory t u = intercalate " - " [t, u]
 
 main :: IO ()
 main = do
-  ids <- fetchIds
+  ids   <- fetchIds
   story <- fetchStory $ byteStringToString $ getNthId (parseIds ids) 0
 
   case getStoryTitle story of
@@ -51,5 +51,3 @@ main = do
     Just title -> TIO.putStrLn $ title
 
   case getStoryUrl story of
-    Nothing   -> TIO.putStrLn "Nothing"
-    Just url  -> TIO.putStrLn $ url
