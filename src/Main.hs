@@ -72,6 +72,7 @@ getKey = reverse <$> getKey' ""
           more <- hReady stdin
           (if more then getKey' else return) (char:chars)
 
+actions :: [Int] -> B8.ByteString -> IO ()
 actions n ids = do 
   hSetBuffering stdin NoBuffering
   hSetEcho stdin False
@@ -90,6 +91,7 @@ actions n ids = do
   
 main :: IO ()
 main = do
+  let r = [0..7]
   ids <- fetchIds
-  printStories [0..7] ids
-  actions [0..7] ids
+  printStories r ids
+  actions r ids
