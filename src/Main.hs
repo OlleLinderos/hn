@@ -14,7 +14,6 @@ import           System.Console.ANSI
 import           System.IO             (stdin, hReady, hSetEcho, hSetBuffering, BufferMode(NoBuffering))
 
 
-
 fetchIds :: IO B8.ByteString
 fetchIds = do
   res <- httpBS "https://hacker-news.firebaseio.com/v0/topstories.json"
@@ -84,14 +83,21 @@ actions n ids = do
         printStories (map (\x -> x + 8) n) ids
         actions (map (\x -> x + 8) n) ids
       "p" -> do
-        clearScreen
-        printStories (map (\x -> x - 8) n) ids
-        actions (map (\x -> x - 8) n) ids
+        if n /= [0..7] then do
+          clearScreen
+          printStories (map (\x -> x - 8) n) ids
+          actions (map (\x -> x - 8) n) ids
+        else do
+          clearScreen
+          putStrLn "Hold your horses, you can't go that way."
       _ -> return ()
   
 main :: IO ()
 main = do
   let r = [0..7]
   ids <- fetchIds
+  putStrLn "--Usage--------"
+  putStrLn "\"n\" for next page, or \"p\" for previous page."
+  putStrLn "---------------\n"
   printStories r ids
   actions r ids
