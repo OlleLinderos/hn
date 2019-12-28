@@ -19,6 +19,7 @@ dependencies:
   - text
   - lens
   - lens-aeson
+  - ansi-terminal
 
 executables:
   hn:

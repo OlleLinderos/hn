@@ -32,4 +32,5 @@ executable hn
     , lens-aeson
     , split
     , text
+    , ansi-terminal
   default-language: Haskell2010
