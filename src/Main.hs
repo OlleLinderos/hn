@@ -11,7 +11,7 @@ import           Data.Text             ( Text )
 import qualified Data.Text.IO          as TIO
 import           Data.List
 import           System.Console.ANSI
-import           System.IO             ( stdin, hReady, hSetEcho, hSetBuffering, BufferMode(NoBuffering ))
+import           System.IO             ( stdin, hReady, hSetEcho, hSetBuffering, BufferMode(NoBuffering) )
 
 
 fetchIds :: IO B8.ByteString
