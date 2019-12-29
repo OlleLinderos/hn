@@ -26,13 +26,13 @@ getNthId :: [B8.ByteString] -> Int -> B8.ByteString
 getNthId x n = x!!n
 
 prepareUrl :: String -> Request
-prepareUrl id =
+prepareUrl itemId =
   parseRequest_ $ intercalate ""
-  ["https://hacker-news.firebaseio.com/v0/item/", id, ".json"] 
+  ["https://hacker-news.firebaseio.com/v0/item/", itemId, ".json"]
 
 fetchStory :: String -> IO B8.ByteString
-fetchStory id = do
-  res <- httpBS $ prepareUrl id
+fetchStory itemId = do
+  res <- httpBS $ prepareUrl itemId
   return (getResponseBody res)
 
 getStoryTitle :: B8.ByteString -> Maybe Text
@@ -77,9 +77,9 @@ actions :: [Int] -> B8.ByteString -> IO ()
 actions n ids = do 
   hSetBuffering stdin NoBuffering
   hSetEcho stdin False
-  key <- getKey
+  k <- getKey
   reset
-  case key of
+  case k of
     "n" -> do
       reset
       printStories (map (\x -> x + 8) n) ids
