@@ -10,6 +10,7 @@ import           Data.Aeson.Lens       ( key, _String )
 import           Data.Text             ( Text )
 import qualified Data.Text.IO          as TIO
 import           Data.List
+import           Data.Maybe            ( fromMaybe )
 import           System.Console.ANSI
 import           System.IO             ( stdin, hReady, hSetEcho, hSetBuffering, BufferMode(NoBuffering) )
 
@@ -51,13 +52,8 @@ printStories r ids = do
 
     putStr $ i ++ ". "
 
-    case getStoryTitle story of
-      Nothing    -> TIO.putStrLn "Nothing"
-      Just title -> TIO.putStrLn title
-
-    case getStoryUrl story of
-      Nothing    -> TIO.putStrLn "Nothing"
-      Just url   -> TIO.putStrLn url
+    TIO.putStrLn $ fromMaybe "Nothing" (getStoryTitle story)
+    TIO.putStrLn $ fromMaybe "Nothing" (getStoryUrl story)
 
     putStr "\n"
 
