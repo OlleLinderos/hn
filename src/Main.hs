@@ -71,33 +71,36 @@ getKey = reverse <$> getKey' ""
           more <- hReady stdin
           (if more then getKey' else return) (char:chars)
 
+reset :: IO ()
+reset = do
+  clearScreen
+  setCursorPosition 0 0
+
 actions :: [Int] -> B8.ByteString -> IO ()
 actions n ids = do 
   hSetBuffering stdin NoBuffering
   hSetEcho stdin False
   key <- getKey
-  when (key /= "ESC") $ do
-    case key of
-      "n" -> do
+  reset
+  case key of
+    "n" -> do
+      reset
+      printStories (map (\x -> x + 8) n) ids
+      actions (map (\x -> x + 8) n) ids
+    "p" -> do
+      if n /= [0..7] then do
+                       reset
+                       printStories (map (\x -> x - 8) n) ids
+                       actions (map (\x -> x - 8) n) ids
+      else do
         clearScreen
-        printStories (map (\x -> x + 8) n) ids
-        actions (map (\x -> x + 8) n) ids
-      "p" -> do
-        if n /= [0..7] then do
-          clearScreen
-          printStories (map (\x -> x - 8) n) ids
-          actions (map (\x -> x - 8) n) ids
-        else do
-          clearScreen
-          putStrLn "Hold your horses, you can't go that way."
-      _ -> return ()
-  
+        main
+    _ -> return ()
+
 main :: IO ()
 main = do
   let r = [0..7]
   ids <- fetchIds
-  putStrLn "--Usage--------"
-  putStrLn "\"n\" for next page, or \"p\" for previous page."
-  putStrLn "---------------\n"
+  reset
   printStories r ids
   actions r ids
