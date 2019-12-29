@@ -4,7 +4,7 @@ module Main where
 
 import           Network.HTTP.Simple   ( httpBS, getResponseBody, Request, parseRequest_ )
 import qualified Data.ByteString.Char8 as B8
-import           Control.Monad         ( forM_, when )
+import           Control.Monad         ( forM_ )
 import           Control.Lens          ( preview )
 import           Data.Aeson.Lens       ( key, _String )
 import           Data.Text             ( Text )
