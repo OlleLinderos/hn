@@ -92,9 +92,7 @@ actions n ids = do
                        reset
                        printStories (map (\x -> x - 8) n) ids
                        actions (map (\x -> x - 8) n) ids
-      else do
-        clearScreen
-        main
+      else main
     _ -> return ()
 
 main :: IO ()
