@@ -49,7 +49,7 @@ printStories r ids = do
              $ B8.unpack
              $ getNthId (parseIds ids) n
 
-    putStr $ i ++ ". " 
+    putStr $ i ++ ". "
 
     case getStoryTitle story of
       Nothing    -> TIO.putStrLn "Nothing"
@@ -74,7 +74,7 @@ reset = do
   setCursorPosition 0 0
 
 actions :: [Int] -> B8.ByteString -> IO ()
-actions n ids = do 
+actions n ids = do
   hSetBuffering stdin NoBuffering
   hSetEcho stdin False
   k <- getKey
