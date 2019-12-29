@@ -53,11 +53,11 @@ printStories r ids = do
 
     case getStoryTitle story of
       Nothing    -> TIO.putStrLn "Nothing"
-      Just title -> TIO.putStrLn $ title
+      Just title -> TIO.putStrLn title
 
     case getStoryUrl story of
       Nothing    -> TIO.putStrLn "Nothing"
-      Just url   -> TIO.putStrLn $ url
+      Just url   -> TIO.putStrLn url
 
     putStr "\n"
 
