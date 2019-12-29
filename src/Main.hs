@@ -25,9 +25,6 @@ parseIds s = B8.split ',' $ B8.tail $ B8.init s
 getNthId :: [B8.ByteString] -> Int -> B8.ByteString
 getNthId x n = x!!n
 
-byteStringToString :: B8.ByteString -> String
-byteStringToString x = filter (/='"') $ show x
-
 prepareUrl :: String -> Request
 prepareUrl id =
   parseRequest_ $ intercalate ""
@@ -49,7 +46,7 @@ printStories r ids = do
   forM_ r $ \n -> do
     let i = show (n+1)
     story <- fetchStory
-             $ byteStringToString
+             $ B8.unpack
              $ getNthId (parseIds ids) n
 
     putStr $ i ++ ". " 
