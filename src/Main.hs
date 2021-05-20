@@ -82,8 +82,8 @@ actions n ids = do
   case k of
     "n" -> do
       reset
-      printStories (map (\x -> x + 8) n) ids
-      actions (map (\x -> x + 8) n) ids
+      printStories (map (+8) n) ids
+      actions (map (+8) n) ids
     "p" -> do
       if n /= [0..7] then do
                        reset
