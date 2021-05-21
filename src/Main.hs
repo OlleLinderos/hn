@@ -4,12 +4,13 @@ module Main where
 
 import           Network.HTTP.Simple   ( httpBS, getResponseBody, Request, parseRequest_ )
 import qualified Data.ByteString.Char8 as B8
-import           Control.Monad         ( forM_, when )
+import           Control.Monad         ( forM_ )
 import           Control.Lens          ( preview )
 import           Data.Aeson.Lens       ( key, _String )
 import           Data.Text             ( Text )
 import qualified Data.Text.IO          as TIO
 import           Data.List
+import           Data.Maybe            ( fromMaybe )
 import           System.Console.ANSI
 import           System.IO             ( stdin, hReady, hSetEcho, hSetBuffering, BufferMode(NoBuffering) )
 
@@ -25,17 +26,14 @@ parseIds s = B8.split ',' $ B8.tail $ B8.init s
 getNthId :: [B8.ByteString] -> Int -> B8.ByteString
 getNthId x n = x!!n
 
-byteStringToString :: B8.ByteString -> String
-byteStringToString x = filter (/='"') $ show x
-
 prepareUrl :: String -> Request
-prepareUrl id =
+prepareUrl itemId =
   parseRequest_ $ intercalate ""
-  ["https://hacker-news.firebaseio.com/v0/item/", id, ".json"] 
+  ["https://hacker-news.firebaseio.com/v0/item/", itemId, ".json"]
 
 fetchStory :: String -> IO B8.ByteString
-fetchStory id = do
-  res <- httpBS $ prepareUrl id
+fetchStory itemId = do
+  res <- httpBS $ prepareUrl itemId
   return (getResponseBody res)
 
 getStoryTitle :: B8.ByteString -> Maybe Text
@@ -49,18 +47,13 @@ printStories r ids = do
   forM_ r $ \n -> do
     let i = show (n+1)
     story <- fetchStory
-             $ byteStringToString
+             $ B8.unpack
              $ getNthId (parseIds ids) n
 
-    putStr $ i ++ ". " 
+    putStr $ i ++ ". "
 
-    case getStoryTitle story of
-      Nothing    -> TIO.putStrLn "Nothing"
-      Just title -> TIO.putStrLn $ title
-
-    case getStoryUrl story of
-      Nothing    -> TIO.putStrLn "Nothing"
-      Just url   -> TIO.putStrLn $ url
+    TIO.putStrLn $ fromMaybe "Nothing" (getStoryTitle story)
+    TIO.putStrLn $ fromMaybe "Nothing" (getStoryUrl story)
 
     putStr "\n"
 
@@ -77,16 +70,16 @@ reset = do
   setCursorPosition 0 0
 
 actions :: [Int] -> B8.ByteString -> IO ()
-actions n ids = do 
+actions n ids = do
   hSetBuffering stdin NoBuffering
   hSetEcho stdin False
-  key <- getKey
+  k <- getKey
   reset
-  case key of
+  case k of
     "n" -> do
       reset
-      printStories (map (\x -> x + 8) n) ids
-      actions (map (\x -> x + 8) n) ids
+      printStories (map (+8) n) ids
+      actions (map (+8) n) ids
     "p" -> do
       if n /= [0..7] then do
                        reset
